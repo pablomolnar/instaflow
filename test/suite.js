@@ -1,26 +1,25 @@
+require('../app');
+
 var assert = require('assert'),
+    should = require('should'),
     http = require('http');
+	
+                                                    
+describe('Basic Suite', function(){
+	
+  it('should return Welcome to Express', function(done) {    	
+    http.get({ path: '/', port: 3000 }, function(response) {                   
+	  // Check status
+      response.should.have.status(200);        
 
-describe('Basic Suite', function() {
-    var keyToSet = 'bingo',
-        valueToSet = 'the dog';
-    describe('#set()', function() {
-        it('should save without error', function(done) {
+      // Check body
+	  response.on('data', function (chunk) {    
+	    chunk.toString().should.include('Welcome to Express')
+	  });    
+	
+      done();
+    })
+  })
 
-            client.set(keyToSet, valueToSet, done);
 
-        });
-    });
-
-    describe('#get()', function() {
-        it('should be able to get the value we set', function(done) {
-
-            client.get(keyToSet, function(err, data) {
-                should.not.exist(err);
-                data.should.equal(valueToSet);
-                done();
-                
-            });
-        });
-    });
-});
+})
