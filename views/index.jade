@@ -4,7 +4,7 @@ head
   script(src='http://code.jquery.com/jquery-1.6.1.min.js')
   script(src='/socket.io/socket.io.js')      
   script
-    var socket = io.connect('http://localhost:3000');
+    var socket = io.connect();
     socket.on('news', function (data) {
       append('#container', 'msg', data.msg);  
     });    
