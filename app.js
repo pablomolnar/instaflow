@@ -1,11 +1,17 @@
-// Module dependencies.
-var express = require('./node_modules/express')
+var __dirname = "."
+var port = (process.env.VMC_APP_PORT || 3000);
+var host = (process.env.VCAP_APP_HOST || 'localhost');
+
+// Module dependencies.  
+//require.paths.unshift('./node_modules');
+
+var express = require('express')
   , routes = require('./routes')
   , io = require('socket.io');
 
 var app = module.exports = express.createServer()
   , io = io.listen(app);
-
+         
 // Configuration
 app.configure(function(){
   app.set('views', __dirname + '/views');
@@ -23,6 +29,16 @@ app.configure('development', function(){
 app.configure('production', function(){
   app.use(express.errorHandler()); 
 });
+
+if(process.env.VMC_APP_PORT) {
+    io.set('transports', [
+        //'websocket',
+        'flashsocket',
+        'htmlfile',
+        'xhr-polling',
+        'jsonp-polling'
+    ]);
+}
 
 // Routes
 app.get('/', routes.index);  
@@ -46,5 +62,5 @@ io.sockets.on('connection', function (socket) {
   });
 });
 
-app.listen(process.env.VCAP_APP_PORT || 3000);
+app.listen(port);
 console.log("Server listening on port %d in %s mode", app.address().port, app.settings.env);
