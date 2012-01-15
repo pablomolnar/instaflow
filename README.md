@@ -1,6 +1,6 @@
 ### About
 
-Pure experimental project to apply some hip frameworks.
+Pure experimental project to apply some emerging technologies.
 
 + Node.js (event model server)
 + Express (mvc)

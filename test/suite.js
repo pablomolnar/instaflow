@@ -4,23 +4,6 @@ var assert = require('assert'),
     should = require('should'),
     http = require('http');
 	
-                                                    
-describe('Basic Suite', function(){
-  it('should return Welcome to Express', function(done) {    	
-    http.get({ path: '/', port: 3000 }, function(response) {                   
-	  // Check status
-      response.should.have.status(200);        
-
-      // Check body
-	  response.on('data', function (chunk) {    
-	    chunk.toString().should.include('Welcome to Express')
-	  });    
-
-      done();
-    })
-  })
-})
-
 describe('Callback URL', function(){
   it('should respond to the GET request with the hub.challenge ', function(done) {    	
     http.get({ path: '/callback?hub.mode=subscribe&hub.challenge=15f7d1a91c1f40f8a748fd134752feb3&hub.verify_token=myVerifyToken', port: 3000 }, function(response) {                   
