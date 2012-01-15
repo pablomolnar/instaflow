@@ -6,14 +6,14 @@ Pure experimental project to apply some hip frameworks.
 + Express (mvc)
 + Jade (templating)                                                      
 + socket.io (websockets)
-+ Cloud Foundry (Hosting)
++ Cloud Foundry (hosting)
 + Instagram real time API (push)      
 
 ### Demo
 
 [instaflow.cloudfoundry.com](http://instaflow.cloudfoundry.com/)
                                                                                                    
-## License
+### License
 
 (The MIT License)
 
