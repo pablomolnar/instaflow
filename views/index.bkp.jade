@@ -1,10 +1,37 @@
+head
+  title= title   
+  meta(charset='utf-8')
+
+  link(rel='stylesheet', href='/css/style.css')  
+  link(rel='stylesheet', href='http://fonts.googleapis.com/css?family=Droid+Sans:400,700', type='text/css')  
+
+  script(src='http://code.jquery.com/jquery-1.6.4.min.js')  
+  script(src='/js/jquery.quicksand.js')      
+  script(src='/js/script.js')      
+  script(src='/socket.io/socket.io.js')      
+  script
+    var socket = io.connect();
+    socket.on('news', function (data) {
+      append('#container', 'msg', data.msg);  
+    });    
+    
+    socket.on('pics', function (pics) {                        
+      jQuery.each(pics, function() {
+        append('#container', 'pics', this.object + ' ' + this.object_id);  
+      });
+    });
+    
+    function append (div, from, msg) {
+      $(div).append($('<p>').append($('<b>').text(from + ': '), msg));
+    }
+    
 body
   #dropcontainer
     #dropdown
-      .container
-        img(src="images/logo.png", alt="Atlas", class="logo")
+      #container
+        img(src="images/logo.png",alt="Atlas", class="logo")
         h3 Quick Links&#58;
-  
+      
         ul
           li(class="dmenu1")
             a(href='#') Forrst
@@ -30,11 +57,11 @@ body
           input(id="email", name="email", type="email", placeholder="Your Email&#46;&#46;&#46;")
           textarea(placeholder="Your Message&#46;&#46;&#46;")
           input(type="submit",value="Submit &rarr;",class="dropsubmitbtn")                                                         	
-                      
+                          
     a(class = "dropbtn", href="#")
 
-  .container 
-    img(src="images/logo.png", alt="Instaflow", class="logo")   
+  #container
+    img(src="images/logo.jpg", alt="Instaflow", class="logo")   
     h1(class="subtitle") Simply the forefront of your work&#46;&#46;&#46;showcase in style my friend&#46;
     nav(id="filter")
     .portfolioseperator
@@ -42,15 +69,15 @@ body
       ul(id="stage")
         - var items = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]
         each item in items
-          li(data-tags="Set #{item%(Math.floor(Math.random()*5))}, Set #{item%(Math.floor(Math.random()*5))}")
+          li(data-tags="Web Design")
             a(href="#")        
               span(class="portfoliohover")
                 h1(class="porthover1") Cool Rollover Titles
                 h1(class="porthover2") As well as some nifty sub-titles       
               img(src="images/portfolio/work#{item}.png")     
 
-    .footerseperator
-    footer
-      h1 &copy; Copyright 2011 Atlas&#46; 
-      h2 Atlas HTML Theme
-      h3 Send me a    
+      .footerseperator
+      footer
+        h1 &copy; Copyright 2011 Atlas&#46; 
+        h2 Atlas HTML Theme
+        h3 Send me a
