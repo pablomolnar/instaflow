@@ -111,6 +111,7 @@ body {
 img.logo {
 	float: left;
 	margin-top: 25px;
+	margin-left: -7px;
 }
 #dropdown h3 {
 	font-size: 12px;
@@ -156,7 +157,7 @@ li.dmenu3 {
 	width: 187px;
 	text-shadow: 0px 1px 0px rgba(0,0,0,.5);
 	filter: dropshadow(color=rgba(0,0,0,.5), offx=0, offy=1);
-	margin-top: -20px;
+	margin-top: -10px;
 }
 .dropavatar {
 	clear: left;
@@ -202,7 +203,7 @@ li.dmenu3 {
 	filter: dropshadow(color=rgba(0,0,0,.5), offx=0, offy=1);
 }
 #dropdown h5.dropquote:after {
-	content: '- Brian Reed';
+	content: '- A. Hunt and D. Thomas';
 	float: right;
 	margin-left: 10px;
 	text-shadow: 0px 1px 0px rgba(0,0,0,.5);
