@@ -1,37 +1,4 @@
 doctype 5
 html  
   head
-    title Instaflow
-    meta(charset='utf-8')
-
-    link(rel='stylesheet', href='css/styles.css')  
-    link(rel='stylesheet', href='http://fonts.googleapis.com/css?family=Droid+Sans:400,700', type='text/css')  
-
-    script(src='http://code.jquery.com/jquery-1.6.4.min.js')  
-    script(src='/js/jquery.quicksand.js')      
-    script(src='/js/script.js')      
-    script(src='/socket.io/socket.io.js')      
-    script
-      var socket = io.connect();
-      socket.on('news', function (data) {
-        append('#container', 'msg', data.msg);  
-      });    
-
-      socket.on('pics', function (pics) {                        
-        jQuery.each(pics, function() {
-          append('#container', 'pics', this.object + ' ' + this.object_id);  
-        });
-      });
-
-      function append (div, from, msg) {
-        $(div).append($('<p>').append($('<b>').text(from + ': '), msg));
-      }
-
-      $(document).ready(function(){
-        $(".dropbtn").click(function(){
-          $("#dropdown").slideToggle("slow");
-          $(this).toggleClass("active");
-        });
-      });
-
   body!= body

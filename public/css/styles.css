@@ -507,6 +507,19 @@ footer h3 a:hover {
  	 transition: 250ms;
 }
 
+footer #log {
+  clear: left;
+  color: #898D97;
+  float: left;
+  font-size: 12px;
+  margin-top: 10px;
+}
+
+
+
+
+
+
 
 
 

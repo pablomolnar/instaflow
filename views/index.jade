@@ -1,45 +1,81 @@
-body
-  #dropcontainer
-    #dropdown
-      .container
-        img(src="images/logo.png", alt="Instaflow", class="logo")
-        h4 Instagram with style...
-        img(src="images/avatar.jpg",alt="Instaflow", class="dropavatar")   
-        h2 The Turkey Leg and Me!
-        p(class="dpara1 dparas") Pure weekend experimental project to apply some emerging technologies.
-        p(class="dpara2 dparas") Node.js (event model server), Express (mvc), Jade (templating), socket.io (websockets), Cloud Foundry (hosting), Instagram real time API (push), HTML5/CSS3
-        h5(class="dropquote") “Some Things Are Better Done than Described...”
-        .dropsep
-        h6 Wanna Get in Touch? 
-        form.ch-form(method="POST", action="/create")               
-          input(id="name", name="name", type="text", placeholder="Your Name...")
-          input(id="email", name="email", type="email", placeholder="Your Email...")
-          textarea(placeholder="Your Message...")
-          input(type="submit",value="Submit &rarr;",class="dropsubmitbtn")                                                         	
+doctype 5
+html  
+  head
+    title Instaflow
+    meta(charset='utf-8')
+
+    link(rel='stylesheet', href='css/styles.css')  
+    link(rel='stylesheet', href='http://fonts.googleapis.com/css?family=Droid+Sans:400,700', type='text/css')  
+
+    script(src='http://code.jquery.com/jquery-1.6.4.min.js')  
+    script(src='/js/jquery.quicksand.js')      
+    script(src='/js/script.js')      
+    script(src='/socket.io/socket.io.js')      
+    script
+      var socket = io.connect();
+      socket.on('news', function (data) {
+        append('#log', 'msg', data.msg);  
+      });    
+
+      socket.on('pics', function (pics) {                        
+        jQuery.each(pics, function() {
+          append('#log', 'pics', this.object + ' ' + this.object_id);  
+        });
+      });
+
+      function append (div, from, msg) {
+        $(div).append($('<p>').append($('<b>').text(from + ': '), msg));
+      }
+
+      $(document).ready(function(){
+        $(".dropbtn").click(function(){
+          $("#dropdown").slideToggle("slow");
+          $(this).toggleClass("active");
+        });
+      });
+
+  body
+    #dropcontainer
+      #dropdown
+        .container
+          img(src="images/logo.png", alt="Instaflow", class="logo")
+          h4 Instagram with style...
+          img(src="images/avatar.jpg",alt="Instaflow", class="dropavatar")   
+          h2 The Turkey Leg and Me!
+          p(class="dpara1 dparas") Pure weekend experimental project to apply some emerging technologies.
+          p(class="dpara2 dparas") Node.js (event model server), Express (mvc), Jade (templating), socket.io (websockets), Cloud Foundry (hosting), Instagram real time API (push), HTML5/CSS3
+          h5(class="dropquote") “Some Things Are Better Done than Described...”
+          .dropsep
+          h6 Wanna Get in Touch? 
+          form.ch-form(method="POST", action="/create")               
+            input(id="name", name="name", type="text", placeholder="Your Name...")
+            input(id="email", name="email", type="email", placeholder="Your Email...")
+            textarea(placeholder="Your Message...")
+            input(type="submit",value="Submit &rarr;",class="dropsubmitbtn")                                                         	
                       
-    a(class = "dropbtn", href="#")
+      a(class = "dropbtn", href="#")
 
-  .container 
-    img(src="images/logo.png", alt="Instaflow", class="logo")   
-    h1(class="subtitle") Instagram with style...
-    nav(id="filter")
-    .portfolioseperator
-    .portfoliocontainer
-      ul(id="stage")
-        - var items = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]
-        each item in items
-          li(data-tags="Set #{item%(Math.floor(Math.random()*5))}, Set #{item%(Math.floor(Math.random()*5))}")
-            a(href="#")        
-              span(class="portfoliohover")
-                h1(class="porthover1") Cool Rollover Titles
-                h1(class="porthover2") As well as some nifty sub-titles       
-              img(src="images/portfolio/work#{item}.png")     
+    .container 
+      img(src="images/logo.png", alt="Instaflow", class="logo")   
+      h1(class="subtitle") Instagram with style...
+      nav(id="filter")
+      .portfolioseperator
+      .portfoliocontainer
+        ul(id="stage")
+          - var items = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]
+          each item in items
+            li(data-tags="Set #{item%(Math.floor(Math.random()*5))}, Set #{item%(Math.floor(Math.random()*5))}")
+              a(href="#")        
+                span(class="portfoliohover")
+                  h1(class="porthover1") Cool Rollover Titles
+                  h1(class="porthover2") As well as some nifty sub-titles       
+                img(src="images/portfolio/work#{item}.png")     
 
-    .footerseperator
-    footer
-      h1 &copy; Copyright 2012 Pablo Molnar 
-      h2 Atlas HTML Theme by 
-        a(href="http://www.purtypixels.com/") Purty Pixels
-      h3 Send me a                                        
-        a(href="https://twitter.com/pablomolnar") tweet
-       
+      .footerseperator
+      footer
+        h1 &copy; Copyright 2012 Pablo Molnar 
+        h2 Atlas HTML Theme by 
+          a(href="http://www.purtypixels.com/") Purty Pixels
+        h3 Send me a                                        
+          a(href="https://twitter.com/pablomolnar") tweet 
+        #log
