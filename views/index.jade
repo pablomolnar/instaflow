@@ -19,7 +19,7 @@ html
 
       socket.on('pics', function (pics) {                        
         jQuery.each(pics, function() {
-          append('#log', 'pics', this.object + ' ' + this.object_id);  
+          append('#log', 'feed', JSON.stringify(this));  
         });
       });
 
