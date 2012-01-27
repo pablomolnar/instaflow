@@ -8,46 +8,51 @@ exports.settings = settings;
 exports.minIds = minIds;
 
 // Process the feed updates data and return the new pics
-function process(updates, callback) { 
+function process(updates, picsCallback) { 
   var pics = [];      
   async.map(updates, function(update, callback) {
     var path = buildPath(update);
+    if(path == null) {
+      return callback(null, update);
+    }
 
     request('https://api.instagram.com' + path, function (error, response, body) {
+      console.log(body)
       if (!error && response.statusCode == 200) {
-        console.log(body)
-        
         var json = JSON.parse(body);    
-        
         if(!json || !json.data) {
           console.log('Did not receive data for ' + path +':');
           console.log(data);
-          return;
+          return callback(null, update);
         }
         
-        console.log('current:' + minIds[update.object]);
-        console.log('next:   ' + json.pagination.next_min_id);     
-        if(!json.pagination.next_min_id) {
-            minIds[update.object] = json.pagination.next_min_id
+        if(json.pagination.next_min_id) {
+          minIds[update.object] = json.pagination.next_min_id;
         }
 
         for(idx in json.data) { 
           var media = json.data[idx];  
 
-          var pic = {}    
-          pic.thumbnail = media.images.thumbnail  
-          pic.user = media.user.username
+          var pic = {};
+          pic.thumbnail = media.images.thumbnail;
+          pic.user = media.user.username;
           
           pics.push(pic);
         }
         
-        callback(null, update);
+        return callback(null, update);
+      } else {
+        console.log('status:' + response.statusCode + ', body:' + body);
+        return callback(null, update);
       }
     });
   }, function(err, updates){ 
-       if(err != null) throw err;
+       if(err != null) {
+         console.log('ERROR:' + err);
+         throw err;
+       }
        console.log('Retorno pics' + JSON.stringify(pics));
-       callback(pics);
+       picsCallback(pics);
   }); 
 }
 
@@ -60,7 +65,9 @@ function buildPath(update) {
   } else if(update.object == 'geography') { 
     resource = 'geographies'
   } else {
-    throw 'Unidentified resource: ' + update.object
+    var error = 'Unidentified resource: ' + update.object 
+    console.log(error)
+    return null
   }
 
   // Build url

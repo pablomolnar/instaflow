@@ -51,12 +51,15 @@ app.get('/callback', function(req, res){
 
 app.post('/callback', function(req, res){  
 	var updates = req.body;  
-	io.sockets.emit('pics', updates);
+	//io.sockets.emit('pics', updates);
   
-	feed.process(updates, function(pics) {     
-    io.sockets.emit('pics', pics); 
-  	res.send('ok');               
+	feed.process(updates, function(pics) {
+	  if(pics.length != 0) {
+	    io.sockets.emit('pics', pics);
+	  }               
   });
+  
+  res.send('ok');
 }); 
        
 // Web sockets
