@@ -7,7 +7,8 @@ var host = (process.env.VCAP_APP_HOST || 'localhost');
 
 var express = require('express')
   , routes = require('./routes')
-  , io = require('socket.io');
+  , io = require('socket.io')
+  , feed = require('./feed'); 
 
 var app = module.exports = express.createServer()
   , io = io.listen(app);
@@ -49,9 +50,13 @@ app.get('/callback', function(req, res){
 });
 
 app.post('/callback', function(req, res){  
-	var pics = req.body;  
-	io.sockets.emit('pics', pics);     
-	res.send('ok');
+	var updates = req.body;  
+	io.sockets.emit('pics', updates);
+  
+	feed.process(updates, function(pics) {     
+    io.sockets.emit('pics', pics); 
+  	res.send('ok');               
+  });
 }); 
        
 // Web sockets
@@ -63,4 +68,4 @@ io.sockets.on('connection', function (socket) {
 });
 
 app.listen(port);
-console.log("Server listening on port %d in %s mode", app.address().port, app.settings.env);
+console.log("Server listening on port %d in %s mode", port, app.settings.env);

@@ -2,7 +2,8 @@ require('../app');
 
 var assert = require('assert'),
     should = require('should'),
-    http = require('http');
+    http = require('http'), 
+    feed = require('../feed');
 	
 describe('Callback URL', function(){
   it('should respond to the GET request with the hub.challenge ', function(done) {    	
@@ -40,16 +41,15 @@ describe('Callback URL', function(){
 	    }
 	];	
 
-	var req = http.request({ port: 3000, path: '/callback', method: 'POST' }, function(res) {
-      // Check status
-	  res.should.have.status(200);        
-	
-	  // Check body
-	  res.on('data', function (chunk) {
-		
-	  });
-	
-	  done();    
+	var req = http.request({ port: 3000, path: '/callback', method: 'POST' }, function(res) {       
+	  var data = ''
+	  res.on('data', function(chunk) { data += chunk; });                               
+	  res.on('end', function() {
+	    console.log(data)                                                        
+	    // Check status
+  	  res.should.have.status(200);
+	    done();
+	  });    
 	});                         
 	
 	// write data to request body
@@ -57,3 +57,27 @@ describe('Callback URL', function(){
 	req.end();
   })
 })
+
+describe('Feed', function() {
+  it('should build the correct url for a tag update', function(done) {  
+    var update = 
+      {
+          "subscription_id": "2",
+          "object": "tag",
+          "object_id": "red",
+          "changed_aspect": "media",
+          "time": 1297286541
+      }                  
+      
+    feed.settings.CLIENT_ID = 'TEST';
+    feed.buildPath(update).should.equal('/v1/tags/red/media/recent?client_id=TEST&count=1');
+    
+    feed.minIds.tag = 5;
+    feed.buildPath(update).should.equal('/v1/tags/red/media/recent?client_id=TEST&min_id=5');
+    
+     done();    
+  })    
+})
+
+
+
