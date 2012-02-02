@@ -16,21 +16,35 @@ html
       socket.on('news', function (data) {
         append('#log', 'msg', data.msg);  
       });    
-
+       
+      var displaying = 0;
       socket.on('pics', function (pics) {
         jQuery.each(pics, function() {
-          append('#log', 'feed', JSON.stringify(this));
-          var e = $('<li><a href="#"><span class="portfoliohover"><h1 class="porthover1"></h1><h1 class="porthover2"></h1></span><img src="" class="imagedropshadow"></a></li>');
-          $('.porthover1',e).text(unescape(this.user));
-          $('.porthover2',e).text(unescape(this.text));
-          $('img',e).attr('src', this.thumbnail.url);
-          $('#stage').append(e);
-          //$('#stage').quicksand($('#stage').find('li'));
+          append('#log', 'feed', JSON.stringify(this));   
+          
+          var li; 
+          console.log(displaying)
+          if(displaying < 15) {
+            li = $('<li><a href="#"><span class="portfoliohover"><h1 class="porthover1"></h1><h1 class="porthover2"></h1></span><img src="" class="imagedropshadow"></a></li>');
+            $('img', li).attr('src', this.thumbnail.url);
+            $('#stage').append(li);
+            displaying++;
+          } else {                           
+            var url = this.thumbnail.url;
+            var random = Math.floor(Math.random()*15);
+            li = $('#stage li')[random];
+            $('img', li).fadeOut(1000, function() {
+              this.src = url;
+            }).fadeIn(1000);
+          }
+          
+          $('.porthover1', li).text(unescape(this.user));
+          $('.porthover2', li).text(unescape(this.text));
         });
       });
 
       function append (div, from, msg) {
-        $(div).append($('<p>').append($('<b>').text(from + ': '), msg));
+        //$(div).append($('<p>').append($('<b>').text(from + ': '), msg));
       }
 
       $(document).ready(function(){
@@ -45,7 +59,7 @@ html
       #dropdown
         .container
           img(src="images/logo.png", alt="Instaflow", class="logo")
-          h4 Instagram with salt & pepper...
+          h4 Instagram, salt & pepper...
           img(src="images/avatar.jpg",alt="Instaflow", class="dropavatar")   
           h2 The Turkey Leg and Me!
           p(class="dpara1 dparas") Pure weekend experimental project to apply some emerging technologies.
@@ -63,7 +77,7 @@ html
 
     .container 
       img(src="images/logo.png", alt="Instaflow", class="logo")   
-      h1(class="subtitle") Instagram with salt & pepper...
+      h1(class="subtitle") Instagram, salt & pepper...
       nav(id="filter")
       .portfolioseperator
       .portfoliocontainer
