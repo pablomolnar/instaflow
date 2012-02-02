@@ -65,10 +65,20 @@ app.post('/callback', function(req, res){
 // Web sockets
 io.sockets.on('connection', function (socket) {
   socket.emit('news', { msg: 'connected' });
+  if(feed.last30pics.length > 0) {
+    socket.emit('pics', feed.last30pics);
+  }
+  
+  socket.on('disconnect', function () {
+    io.sockets.emit('news','user disconnected');           
+    console.log('user disconnected');
+  });        
+  
   socket.on('my other event', function (data) {
-    console.log(data); 
+    console.log(data);  
+    socket.emit('news', { msg: 'ping' });
   });
-});
+});     
 
 app.listen(port);
 console.log("Server listening on port %d in %s mode", port, app.settings.env);

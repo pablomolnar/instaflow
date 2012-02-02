@@ -2,10 +2,12 @@ var settings = require('./settings'),
     request = require('request'),
     async = require('async');
     
-var minIds = {};  
+var minIds = {};      
+var last30pics = [];  
 
 exports.settings = settings;
-exports.minIds = minIds;
+exports.minIds = minIds; 
+exports.last30pics = last30pics; 
 
 // Process the feed updates data and return the new pics
 function process(updates, picsCallback) { 
@@ -35,9 +37,23 @@ function process(updates, picsCallback) {
 
           var pic = {};
           pic.thumbnail = media.images.thumbnail;
-          pic.user = media.user.username;
+          pic.user = media.user.full_name;
+          pic.text = "";
+          if(media.caption != null) {
+            pic.text = media.caption.text;
+            if(pic.text.length > 25) {
+              pic.text = pic.text.substring(0, 25) + "...";
+            }
+          }
           
-          pics.push(pic);
+          pic.user = escape(pic.user)
+          pic.text = escape(pic.text)
+          
+          pics.push(pic);     
+          
+          // Track last 15 pics
+          last30pics.push(pic); 
+          if(last30pics.length > 15) last30pics.shift();
         }
         
         return callback(null, update);

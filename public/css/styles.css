@@ -365,7 +365,7 @@ li.dmenu3 {
 
 .portfoliocontainer {
 	width:1052px;
-	height: 695px;
+	/*height: 695px;*/
 	overflow: hidden;
 	display: block;
 	float: left;
@@ -376,18 +376,31 @@ li.dmenu3 {
 	float: left;
 	padding-bottom: 20px;
 	padding-right: 20px;
-	width: 210px;
-	height: 140px;
+	width: 162px;
+	height: 162px;
 	position: relative;
 	padding-left: 15px;
 	padding-top: 15px;
-}
+}  
+/*
 .portfoliocontainer li img {
 	-webkit-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, .25);
 	-moz-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, .25);
 	box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, .25);
 	border-bottom: 1px solid #000000;
+} */ 
+
+.imagedropshadow {
+	padding: 5px;
+	border: solid 1px #EFEFEF;
 }
+a:hover img.imagedropshadow {
+	border: solid 1px #CCC;
+	-moz-box-shadow: 1px 1px 5px #999;
+	-webkit-box-shadow: 1px 1px 5px #999;
+        box-shadow: 1px 1px 5px #999;
+}
+
 .portfoliocontainer ul{
 	overflow:hidden;
 }
@@ -396,14 +409,14 @@ li.dmenu3 {
 	display:none;
 }
 .portfoliohover {
-	width: 210px;
+	width: 162px;
 	height: 54px;
 	background-image: url(../images/portfolio/workhover.png);
 	background-position: 0 0;
 	background-repeat: no-repeat;
 	position: absolute;
 	opacity: 0;
-	top: 101px;
+	top: 122px;
 	left: 15px;
 	-webkit-transition: opacity .5s ease-in-out;
   	-moz-transition: opacity .5s ease-in-out;
@@ -432,8 +445,7 @@ li.dmenu3 {
 	color: #343434;
 	text-shadow: 0px 1px 0px rgba(255,255,255,.5);
 	filter: dropshadow(color=rgba(255,255,255,.5), offx=0, offy=1);
-	float: left;
-	margin-top: 4px;
+	margin-top: 35px;
 	margin-left: 9px;
 }
 
@@ -514,28 +526,6 @@ footer #log {
   font-size: 12px;
   margin-top: 10px;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
