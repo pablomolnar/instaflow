@@ -18,6 +18,8 @@ function process(updates, picsCallback) {
       return callback(null, update);
     }
 
+    console.log('Requesting url: https://api.instagram.com' + path);
+
     request('https://api.instagram.com' + path, function (error, response, body) {
       console.log(body)
       if (!error && response.statusCode == 200) {
@@ -48,9 +50,19 @@ function process(updates, picsCallback) {
           
           pic.user = escape(pic.user)
           pic.text = escape(pic.text)
+
+          // Check if already is in last30pics
+          var duplicated = false
+          for(p in last30pics) {
+            if(p.thumbnail == pic.thumbnail) {
+              duplicated = true;          
+            }
+          }    
+
+          if(duplicated) continue;
           
-          pics.push(pic);     
-          
+          pics.push(pic); 
+
           // Track last 15 pics
           last30pics.push(pic); 
           if(last30pics.length > 15) last30pics.shift();
