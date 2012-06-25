@@ -25,21 +25,26 @@ html
           var li; 
           console.log(displaying)
           if(displaying < 15) {
-            li = $('<li><a href="#"><span class="portfoliohover"><h1 class="porthover1"></h1><h1 class="porthover2"></h1></span><img src="" class="imagedropshadow"></a></li>');
+            li = $('<li><a href="#"><span class="portfoliohover"><h1 class="porthover1"></h1><h1 class="porthover2"></h1></span><img src="" class=" "></a></li>');
             $('img', li).attr('src', this.thumbnail.url);
             $('#stage').append(li);
             displaying++;
-          } else {                           
-            var url = this.thumbnail.url;
+          } else {               
             var random = Math.floor(Math.random()*15);
             li = $('#stage li')[random];
-            $('img', li).fadeOut(1000, function() {
-              this.src = url;
-            }).fadeIn(1000);
+
+            var image = $('<img />').attr('src', this.thumbnail.url).load(function() {
+                var src = this.src
+                $('img', li).fadeOut(1000, function() {
+                  this.src = src;
+                }).fadeIn(1000);
+
+            });
           }
           
           $('.porthover1', li).text(unescape(this.user));
           $('.porthover2', li).text(unescape(this.text));
+
         });
       });
 
