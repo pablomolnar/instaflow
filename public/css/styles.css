@@ -409,15 +409,15 @@ a:hover img.imagedropshadow {
 	display:none;
 }
 .portfoliohover {
-	width: 162px;
+	width: 150px;
 	height: 54px;
 	background-image: url(../images/portfolio/workhover.png);
 	background-position: 0 0;
 	background-repeat: no-repeat;
 	position: absolute;
 	opacity: 0;
-	top: 122px;
-	left: 15px;
+	top: 115px;
+	left: 19px;
 	-webkit-transition: opacity .5s ease-in-out;
   	-moz-transition: opacity .5s ease-in-out;
   	-o-transition: opacity .5s ease-in-out;
@@ -447,6 +447,21 @@ a:hover img.imagedropshadow {
 	filter: dropshadow(color=rgba(255,255,255,.5), offx=0, offy=1);
 	margin-top: 35px;
 	margin-left: 9px;
+}
+
+.itemgrid img {
+	border: 1px solid #777;
+	padding: 3px;
+	-webkit-border-radius:4px;
+	-moz-border-radius:4px;
+	border-radius:4px;
+	-webkit-box-shadow:0 1px 1px rgba(0, 0, 0, 0.075);
+	-moz-box-shadow:0 1px 1px rgba(0, 0, 0, 0.075);
+	box-shadow:0 1px 1px rgba(0, 0, 0, 0.075);
+}
+
+.itemgrid img:hover {
+	border-color: #33B5E5;
 }
 
 
